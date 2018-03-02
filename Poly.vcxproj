@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="task.h" />
     <ClInclude Include="unique_ptr.h" />
+    <ClInclude Include="unique_ptr_v2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

@@ -225,11 +225,6 @@ namespace poly
             return get() != nullptr;
         }
 
-        //T* release()
-        //{
-
-        //}
-
         bool is_local() const { return get_base().is_local(); }
 
     private:

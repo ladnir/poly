@@ -23,5 +23,11 @@
     <ClInclude Include="unique_ptr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="unique_ptr_v2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

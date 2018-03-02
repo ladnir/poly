@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 #include "unique_ptr.h"
+#include "unique_ptr_v2.h"
+
 
 struct base
 {
@@ -45,52 +47,60 @@ struct special_small : public small
 };
 
 template<typename Ptr>
-void prsize_t(Ptr& ptr)
+void print(Ptr& ptr)
 {
-    std::cout << ptr->to_string() << " (local = " << ptr.is_local() << ")" << std::endl;
+    std::cout << ptr->to_string() << " (local = " << ptr.is_inlined() << ")" << std::endl;
 }
 
 int main()
 {
+    using namespace poly_v2;
+    unique_ptr<base> ptr;
 
-    poly::unique_ptr<base> ptr;
+    //unique_ptr<base> pp(in_place<large>{}, "hello");
+
+    ptr.emplace<small>(2);
+    print(ptr);
 
 
     small s(1);
     ptr = std::move(s);
-    prsize_t(ptr);
+    print(ptr);
 
     ptr.reset(new small(2));
-    prsize_t(ptr);
+    print(ptr);
 
     ptr.emplace<small>(3);
-    prsize_t(ptr);
+    print(ptr);
 
     large l("#1");
     ptr = std::move(l);
-    prsize_t(ptr);
+    print(ptr);
 
     ptr.reset(new large("#2"));
-    prsize_t(ptr);
+    print(ptr);
 
     ptr.emplace<large>("#3");
-    prsize_t(ptr);
+    print(ptr);
 
-    poly::unique_ptr<base, 10000> largePtr(std::move(ptr));
-    prsize_t(largePtr);
+    unique_ptr<base, 10000> largePtr(std::move(ptr));
+    print(largePtr);
 
     largePtr.emplace<small>(4);
 
-    poly::unique_ptr<base, 8> tinyPtr;
+    unique_ptr<base, 8> tinyPtr;
 
 
     tinyPtr = std::move(largePtr);
-    prsize_t(tinyPtr);
+    print(tinyPtr);
 
     small* ss = new special_small(10, 'c');
 
 
     largePtr.reset(ss);
+
+    ss = largePtr.release<small>();
+
     ss = new small(10);
     largePtr.reset(ss);
 
